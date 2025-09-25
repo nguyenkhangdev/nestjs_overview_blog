@@ -8,6 +8,17 @@ export class AuthController {
 
   @Post('signin')
   async signin(@Body() signInDto: SignInDto) {
-    return this.authService.signin(signInDto.email, signInDto.password);
+    const token = await this.authService.signin(
+      signInDto.email,
+      signInDto.password,
+    );
+    if (!token) {
+      return { success: false, message: 'Invalid credentials' };
+    }
+
+    return {
+      success: true,
+      access_token: token,
+    };
   }
 }
