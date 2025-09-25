@@ -7,6 +7,7 @@ import { Post } from './post/entities/post.entity';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -19,6 +20,9 @@ import { AuthModule } from './auth/auth.module';
       database: 'nestjs_blog',
       entities: [Post, User],
       synchronize: true,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
     PostModule,
     UserModule,
