@@ -17,7 +17,11 @@ export class AuthService {
     if (!user || user.password !== password) {
       return false;
     }
-    const payload: JwtPayload = { sub: user.id, email: user.email };
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
 
     //return jwt token
     const jwtToken = this.jwtService.sign(payload);
