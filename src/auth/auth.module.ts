@@ -11,7 +11,7 @@ import { JwtStrategy } from './jwt.strategy';
     UserModule,
     JwtModule.register({
       secret: 'hanbiro',
-      signOptions: { expiresIn: '2h' },
+      signOptions: { expiresIn: '1d' },
     }),
     PassportModule,
   ],
