@@ -18,17 +18,17 @@ export class AuthController {
 
   @Post('signin')
   async signin(@Body() signInDto: SignInDto) {
-    const token = await this.authService.signin(
+    const data = await this.authService.signin(
       signInDto.email,
       signInDto.password,
     );
-    if (!token) {
+    if (!data) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
     return {
       message: 'Sign in successfully',
-      data: { access_token: token },
+      data: data,
     };
   }
 
