@@ -1,33 +1,7 @@
 ## Nestjs overview blog
 
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+- Modules: UserModule, PostModule, AuthModule.
+- Dependency Injection: AuthModule injects UserModule to access user data for authentication.
+- Controllers & Services: Handle CRUD operations for posts and users.
+- Guards: JWT authentication, role-based and self-or-admin access.
+- Response Standardization: All responses follow { success, message, data } format.
