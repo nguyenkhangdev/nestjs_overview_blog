@@ -23,36 +23,43 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
+  async create(@Body() createUserDto: CreateUserDto) {
+    const data = await this.userService.create(createUserDto);
+    return { message: 'Create user successfully', data };
+  }
+
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  async findAll() {
+    const data = await this.userService.findAll();
+    return { message: 'Find users successfully', data };
   }
 
-  @UseGuards(JwtAuthGuard, SelfOrAdminGuard)
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.findOne(+id);
+  @UseGuards(JwtAuthGuard, SelfOrAdminGuard)
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const data = await this.userService.findOne(id);
+    return { message: 'Find user successfully', data };
   }
 
-  @UseGuards(JwtAuthGuard, SelfOrAdminGuard)
   @Patch(':id')
-  update(
+  @UseGuards(JwtAuthGuard, SelfOrAdminGuard)
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(+id, updateUserDto);
+    const data = await this.userService.update(id, updateUserDto);
+    return { message: 'Update user successfully', data };
   }
 
+  @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const data = await this.userService.remove(id);
+    return { message: 'Delete user successfully', data };
   }
 }

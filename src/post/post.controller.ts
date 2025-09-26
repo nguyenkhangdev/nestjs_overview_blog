@@ -23,34 +23,42 @@ export class PostController {
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postService.create(createPostDto);
+  async create(@Body() createPostDto: CreatePostDto) {
+    const data = await this.postService.create(createPostDto);
+    return { message: 'Create post successfully', data: data };
   }
 
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  async findAll() {
+    const data = await this.postService.findAll();
+    return { message: 'Find post successfully', data: data };
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const data = await this.postService.findOne(+id);
+    return { message: 'Find post successfully', data: data };
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePostDto: UpdatePostDto,
   ) {
-    return this.postService.update(+id, updatePostDto);
+    const data = await this.postService.update(+id, updatePostDto);
+    return { message: 'Update post successfully', data: data };
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const data = await this.postService.remove(id);
+    return {
+      message: 'Delete post successfully',
+      data: data,
+    };
   }
 }

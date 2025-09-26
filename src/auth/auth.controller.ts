@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin-auth.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -15,12 +23,12 @@ export class AuthController {
       signInDto.password,
     );
     if (!token) {
-      return { success: false, message: 'Invalid credentials' };
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     return {
-      success: true,
-      access_token: token,
+      message: 'Sign in successfully',
+      data: { access_token: token },
     };
   }
 
