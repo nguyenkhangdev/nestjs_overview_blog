@@ -1,5 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { UserRole } from '../interfaces/user-role.interface';
+import { Post } from 'src/post/entities/post.entity';
 
 @Entity()
 @Unique(['email'])
@@ -19,4 +26,7 @@ export class User {
     default: UserRole.USER,
   })
   role: UserRole;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }

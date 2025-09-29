@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -15,6 +16,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Roles } from 'src/auth/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { RequestUser } from 'src/user/interfaces/request-user.interface';
 
 @Controller('posts')
 export class PostController {
@@ -23,8 +25,13 @@ export class PostController {
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  async create(@Body() createPostDto: CreatePostDto) {
-    const data = await this.postService.create(createPostDto);
+  async create(
+    @Body() createPostDto: CreatePostDto,
+    @Req() req: { user: RequestUser },
+  ) {
+    const userId = req.user.id;
+    const data = await this.postService.create(createPostDto, userId);
+
     return { message: 'Create post successfully', data: data };
   }
 

@@ -17,6 +17,7 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return false;
     }
+
     const payload: JwtPayload = {
       sub: user.id,
       email: user.email,
