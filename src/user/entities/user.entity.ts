@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { UserRole } from '../interfaces/user-role.interface';
 import { Post } from 'src/post/entities/post.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @Unique(['email'])
@@ -18,6 +19,7 @@ export class User {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column({

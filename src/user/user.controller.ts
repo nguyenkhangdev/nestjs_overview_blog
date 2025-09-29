@@ -8,6 +8,8 @@ import {
   Delete,
   UseGuards,
   ParseIntPipe,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,6 +20,7 @@ import { Roles } from 'src/auth/roles.decorator';
 import { SelfOrAdminGuard } from 'src/auth/selfOrAdmin.guard';
 import { UserRole } from './interfaces/user-role.interface';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
